@@ -19,6 +19,7 @@
     <Page.Resources>
         <DataTemplate x:Key="ShoppingListDataViews">
             <Grid>
+                <!-- set up the binding to connected table-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding NameOfItem}" Padding="0,0,5,0"/>
 
@@ -34,6 +35,7 @@
         </DataTemplate>
     </Page.Resources>
 
+    <!-- set up the page to look like and respond like other app pages under different visual state conditions-->
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -68,6 +70,7 @@
 
         </VisualStateManager.VisualStateGroups>
 
+        <!-- add the buttons and title to the page header-->
         <controls:PageHeader x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="true"
                      RelativePanel.AlignRightWithPanel="True"
                      RelativePanel.AlignTopWithPanel="True" Text="Shopping List">
@@ -79,6 +82,8 @@
 
 
         </controls:PageHeader>
+
+        <!-- Add the buttons and style to the page footer-->
         <controls:PageHeader x:Name="pageFooter" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignBottomWithPanel="True">
@@ -90,6 +95,7 @@
         </controls:PageHeader>
 
         <Pivot>
+            <!-- Set up where the user will enter data and layout of the page-->
             <RelativePanel.Below>pageHeader</RelativePanel.Below>
             <RelativePanel.Above>pageFooter</RelativePanel.Above>
             <PivotItem Header="Add List Item">
@@ -108,6 +114,7 @@
 
 
                     </StackPanel>
+                    <!-- where retrieved table data will be displayed-->
                     <ListView x:Name="ShoppingListView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemTemplate="{StaticResource ShoppingListDataViews}">
                         <RelativePanel.Below>pageStart</RelativePanel.Below>
                     </ListView>

@@ -102,6 +102,7 @@
             
 
             <!-- ShoppingList Button-->
+            <!--tell the app which page to load-->
             <Controls:HamburgerButtonInfo ClearHistory="true" PageType="views:ShoppingListPage" AutomationProperties.Name="Jerry">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"

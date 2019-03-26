@@ -178,7 +178,8 @@ namespace StartFinance.Views
                     //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime.ToString() + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     //selectedItem = "";
                     ShoppingListView.ItemsSource = query1.ToList(); //this will deselect the item
-
+                    //clear Fields
+                    ClearFields();
                 }
             }
             catch (NullReferenceException)

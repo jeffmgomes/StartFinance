@@ -88,6 +88,7 @@
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignBottomWithPanel="True">
             <controls:PageHeader.PrimaryCommands>
+                <AppBarButton x:Name="UpdateItem" Icon="Up" Label="Update Item" Click="UpdateItem_Click"/>
                 <AppBarButton x:Name="AddItem" Icon="Add" Label="Add Item to Shopping List" Click="AddItem_Click"/>
                 <AppBarButton x:Name="DeleteItem" Icon="Delete" Label="Delete Item" Click="DeleteItem_Click"/>
             </controls:PageHeader.PrimaryCommands>
@@ -115,7 +116,9 @@
 
                     </StackPanel>
                     <!-- where retrieved table data will be displayed-->
-                    <ListView x:Name="ShoppingListView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemTemplate="{StaticResource ShoppingListDataViews}">
+                    <ListView x:Name="ShoppingListView" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemTemplate="{StaticResource ShoppingListDataViews}" 
+                              SelectionChanged="ItemSelected" 
+                              >
                         <RelativePanel.Below>pageStart</RelativePanel.Below>
                     </ListView>
 

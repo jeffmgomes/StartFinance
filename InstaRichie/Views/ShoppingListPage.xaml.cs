@@ -27,6 +27,7 @@ namespace StartFinance.Views
     {
         SQLiteConnection conn; // adding an SQLite connection
         string path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Findata.sqlite");
+        public string selectedItem = "";
 
         //connect to the database upon page load
         public ShoppingListPage()
@@ -54,6 +55,13 @@ namespace StartFinance.Views
 
         }
 
+        public void ClearFields()
+        {
+            ItemNameTextBox.Text = "";
+            ShopNameTextBox.Text = "";
+            ItemPriceTextBox.Text = "";
+        }
+
         //handle addButton event
         public async void AddItem_Click(object sender, RoutedEventArgs e)
         {
@@ -76,6 +84,8 @@ namespace StartFinance.Views
                         ShopName = ShopNameTextBox.Text,
                         ShoppingDate = ShoppingDatePicker.Date.DateTime
                     });
+                    //clear fields
+                    ClearFields();
                     //reload results to reflect new data
                     Results();
                 }
@@ -87,10 +97,8 @@ namespace StartFinance.Views
                     MessageDialog dialog = new MessageDialog("You forgot to enter the Amount or entered an invalid Amount", "Oh dear.!");
                     await dialog.ShowAsync();
                 }
-                else if (ex is SQLiteException)
-                {  //cannot use same name
-                    //OPTIONAL FEATURE: change this to reflect that items with the same name could be purchased from differenct shops. 
-                    //only ITem ID needs to be unique.
+                else if (ex is SQLiteException)//this exception should never activate, as Item IDs autoincrement and are unique. Duplicate item names will not cause exception.
+                {  
                     MessageDialog dialog = new MessageDialog("Item Name already exists, Try Different Name", "Oh dear..!");
                     await dialog.ShowAsync();
                 }
@@ -102,28 +110,105 @@ namespace StartFinance.Views
         //handle delete button click
         public async void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
+            //string selectedItemName = ((ShoppingList)ShoppingListView.SelectedItem).NameOfItem; //now handled in ItemSelected Event
+            
             try
             {
-                string selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).NameOfItem;
+                //string selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString();
                 if (selectedItem == "")
                 {
-                    //will match to any item in shopping list that has the same name.
+                    //
                     MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
                     await dialog.ShowAsync();
                 }
                 else
                 {
-                    //OPTIONAL FEATURE: Either change to handle item ID, or to only dealete items with matching NameOfItem AND ShopName
+                    //UPDATED: Changed to handle item ID
                     conn.CreateTable<ShoppingList>();
                     var query1 = conn.Table<ShoppingList>();
-                    var query2 = conn.Query<ShoppingList>("DELETE FROM ShoppingList WHERE NameOfItem ='" + selectedItem + "'");
+                    //var query2 = conn.Update(ShoppingList)
+                    var query2 = conn.Query<ShoppingList>("DELETE FROM ShoppingList WHERE ShoppingItemID ='" + selectedItem + "'");
                     ShoppingListView.ItemsSource = query1.ToList();
+                    ClearFields();
                 }
             }
             catch (NullReferenceException)
             {
                 //prevents a crash from pressing delete button while no item selected.
                 MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
+
+        }
+
+        private async void UpdateItem_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {//add code set fields to selected item values
+                string newItemName = ItemNameTextBox.Text;
+                double newPrice = Convert.ToDouble(ItemPriceTextBox.Text);
+                string newShopName = ShopNameTextBox.Text;
+                
+
+                DateTime newShopTime = ShoppingDatePicker.Date.DateTime;
+               
+               
+
+
+                //selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString(); //now handled in ItemSelected event
+                if (selectedItem == "")
+                {
+                    MessageDialog dialog = new MessageDialog("You need to select the item first.", "Oops..!");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    //UPDATED: Changed to handle item ID
+                    conn.CreateTable<ShoppingList>();
+                    var query1 = conn.Table<ShoppingList>();
+                    //update item name
+                    var query2 = conn.Query<ShoppingList>("UPDATE ShoppingList SET NameOfItem = '" + newItemName + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    //update itemPrice
+                    var query3 = conn.Query<ShoppingList>("UPDATE ShoppingList SET PriceQuoted = '" + newPrice + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    //update Name of shop
+                    var query4 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShopName = '" + newShopName + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    //update time of shop //CANNOT UPDATE
+                    //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime.ToString() + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    //selectedItem = "";
+                    ShoppingListView.ItemsSource = query1.ToList(); //this will deselect the item
+
+                }
+            }
+            catch (NullReferenceException)
+            {
+                //prevents a crash from pressing update button while no item selected.
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
+        }
+
+        private async void ItemSelected(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if(ShoppingListView.SelectedItem!=null)
+                if (((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString() != null)
+                {
+                    selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString();
+                    //update the fields
+                    ItemNameTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).NameOfItem;
+                    ShopNameTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).ShopName;
+                    ItemPriceTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).PriceQuoted.ToString();
+
+
+                }
+            }
+            catch (NullReferenceException)
+            {
+                //prevents a crash from pressing update button while no item selected.
+                MessageDialog dialog = new MessageDialog("Not selected the Item", "Oh dear..!");
                 await dialog.ShowAsync();
             }
 

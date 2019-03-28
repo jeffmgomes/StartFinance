@@ -22,6 +22,6 @@ namespace StartFinance.Models
         public string ShopName { get; set; }
 
         [NotNull]
-        public DateTime ShoppingDate { get; set; }
+        public String ShoppingDate { get; set; }
     }
 }

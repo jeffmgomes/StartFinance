@@ -98,7 +98,23 @@
                                Text="WishList" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
+            <!-- Other new buttons-->
+            
+
+            <!-- ShoppingList Button-->
+            <!--tell the app which page to load-->
+            <Controls:HamburgerButtonInfo ClearHistory="true" PageType="views:ShoppingListPage" AutomationProperties.Name="Jerry">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+                		Symbol="List" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Shopping List" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
         </Controls:HamburgerMenu.PrimaryButtons>
+        
+       
 
         <Controls:HamburgerMenu.SecondaryButtons>
             <!--  settingspage button  -->

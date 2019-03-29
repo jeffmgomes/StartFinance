@@ -77,12 +77,16 @@ namespace StartFinance.Views
                 {
                     //connect to table and add information
                     conn.CreateTable<ShoppingList>();
+                    String ShoppingDateString;
+                    ShoppingDateString = ShoppingDatePicker.Date.Day.ToString();
+                    ShoppingDateString += "/" + ShoppingDatePicker.Date.Month.ToString();
+                    ShoppingDateString += "/" + ShoppingDatePicker.Date.Year.ToString();
                     conn.Insert(new ShoppingList
                     {
                         NameOfItem = ItemNameTextBox.Text,
                         PriceQuoted = Convert.ToDouble(ItemPriceTextBox.Text),
                         ShopName = ShopNameTextBox.Text,
-                        ShoppingDate = ShoppingDatePicker.Date.DateTime
+                        ShoppingDate = ShoppingDateString
                     });
                     //clear fields
                     ClearFields();
@@ -138,6 +142,11 @@ namespace StartFinance.Views
                 MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
                 await dialog.ShowAsync();
             }
+            catch (Exception ex)
+            {
+                MessageDialog dialog = new MessageDialog("Have you selected an item?", "Oh dear..!");
+                await dialog.ShowAsync();
+            }
 
         }
 
@@ -152,8 +161,8 @@ namespace StartFinance.Views
                 
 
                 DateTime newShopTime = ShoppingDatePicker.Date.DateTime;
-               
-               
+                string ShopTimeString;
+                ShopTimeString = ShoppingDatePicker.Date.Day.ToString() + "/" + ShoppingDatePicker.Date.Month.ToString() + "/" + ShoppingDatePicker.Date.Year.ToString();
 
 
                 //selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString(); //now handled in ItemSelected event
@@ -175,7 +184,7 @@ namespace StartFinance.Views
                     var query4 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShopName = '" + newShopName + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     //update time of shop //CANNOT UPDATE
                     //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime + "' WHERE ShoppingItemID ='" + selectedItem + "'");
-                    //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime.ToString() + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + ShopTimeString + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     //selectedItem = "";
                     ShoppingListView.ItemsSource = query1.ToList(); //this will deselect the item
                     //clear Fields
@@ -186,6 +195,11 @@ namespace StartFinance.Views
             {
                 //prevents a crash from pressing update button while no item selected.
                 MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
+                await dialog.ShowAsync();
+            }
+            catch(Exception ex)
+            {
+                MessageDialog dialog = new MessageDialog("Have you selected an item?", "Oh dear..!");
                 await dialog.ShowAsync();
             }
         }

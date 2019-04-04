@@ -125,6 +125,9 @@
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ContactDetailsPage.xaml.cs">
+      <DependentUpon>ContactDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DashBoardPage.xaml.cs">
       <DependentUpon>DashBoardPage.xaml</DependentUpon>
     </Compile>
@@ -198,6 +201,10 @@
     <Page Include="Views\Busy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ContactDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DashBoardPage.xaml">
       <SubType>Designer</SubType>

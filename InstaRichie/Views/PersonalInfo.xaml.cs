@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.ComponentModel.DataAnnotations;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -111,6 +112,15 @@ namespace StartFinance.Views
             }else { return 2; }
         }
 
+        /// <summary>
+        /// Check if the email is valid or not
+        /// </summary>
+        /// <param name="emailAddress">Email address as String</param>
+        /// <returns>True if valid, otherwise False</returns>
+        private bool isEmailValid(string emailAddress) {
+            return new EmailAddressAttribute().IsValid(emailAddress);
+        }
+
         private async void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -136,6 +146,12 @@ namespace StartFinance.Views
                 {
                     // Check if it is same person
                     msg = new MessageDialog("Person already exist, Try Different Name", "Oops..!");
+                    await msg.ShowAsync();
+                }
+                else if (!isEmailValid(txtEmail.Text))
+                {
+                    // Email is not valid
+                    msg = new MessageDialog("Email is not valid", "Oops..!");
                     await msg.ShowAsync();
                 }
                 else

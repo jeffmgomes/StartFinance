@@ -22,6 +22,6 @@ namespace StartFinance.Models
         public string CompanyName { get; set; }
 
         [NotNull]
-        public string MobilePhone { get; set; }
+        public int MobilePhone { get; set; }
     }
 }

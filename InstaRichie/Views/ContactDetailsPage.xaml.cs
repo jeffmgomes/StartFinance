@@ -65,12 +65,12 @@ namespace StartFinance.Views
             {
                 //connect to table and add information
                 conn.CreateTable<ContactDetails>();
-                conn.Insert(new ContactDetails
-                {
-                    FirstName = FirstNameTextBox.Text,
-                    LastName = LastNameTextBox.Text,
-                    CompanyName = CompanyNameTextBox.Text,
-                    MobilePhone=MobilePhoneTextBox.Text
+                    conn.Insert(new ContactDetails
+                    {
+                        FirstName = FirstNameTextBox.Text,
+                        LastName = LastNameTextBox.Text,
+                        CompanyName = CompanyNameTextBox.Text,
+                        MobilePhone = Convert.ToInt32(MobilePhoneTextBox.Text)
                 });
                 //clear fields
                 ClearFields();
@@ -82,7 +82,7 @@ namespace StartFinance.Views
         {
             if (ex is FormatException)
             {   //if user enters text or symbols in the amount field
-                MessageDialog dialog = new MessageDialog("Format Error!!","Oops..!");
+                MessageDialog dialog = new MessageDialog("Format Error!! Phone must be numeric!","Oops..!");
                 await dialog.ShowAsync();
             }
             else if (ex is SQLiteException)//this exception should never activate, as Item IDs autoincrement and are unique. Duplicate item names will not cause exception.
@@ -143,7 +143,7 @@ namespace StartFinance.Views
                 string firstName = FirstNameTextBox.Text;
                 string lastName = LastNameTextBox.Text;
                 string companyName = CompanyNameTextBox.Text;
-                string mobilePhone = MobilePhoneTextBox.Text;
+                int mobilePhone = Convert.ToInt32(MobilePhoneTextBox.Text);
 
                 string selectedItem = ((ContactDetails)ContactDetailsListView.SelectedItem).ContactID.ToString();
                 if (selectedItem == "")
@@ -181,6 +181,11 @@ namespace StartFinance.Views
             MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
             await dialog.ShowAsync();
         }
+            catch (FormatException)
+            {   //if user enters text or symbols in the amount field
+                MessageDialog dialog = new MessageDialog("Format Error!! Phone must be numeric!", "Oops..!");
+                await dialog.ShowAsync();
+            }
         catch (Exception ex)
         {
             MessageDialog dialog = new MessageDialog("Have you selected an item?", "Oh dear..!");
@@ -200,7 +205,7 @@ namespace StartFinance.Views
                     FirstNameTextBox.Text = ((ContactDetails)ContactDetailsListView.SelectedItem).FirstName;
                     LastNameTextBox.Text = ((ContactDetails)ContactDetailsListView.SelectedItem).LastName;
                     CompanyNameTextBox.Text = ((ContactDetails)ContactDetailsListView.SelectedItem).CompanyName;
-                    MobilePhoneTextBox.Text = ((ContactDetails)ContactDetailsListView.SelectedItem).MobilePhone;
+                    MobilePhoneTextBox.Text = ((ContactDetails)ContactDetailsListView.SelectedItem).MobilePhone.ToString();
 
 
                     }

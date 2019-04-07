@@ -19,9 +19,12 @@
                 <!-- set up the binding to connected table-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding ContactID}" Padding="0,0,5,0"/>
-                    <TextBlock Text="{Binding FirstName}"/>
-                    <TextBlock Text="{Binding LastName}" Padding="0,0,1,0"/>
+                    <TextBlock Text="Name: " Padding="0,0,5,0" FontWeight="Black"/>
+                    <TextBlock Text="{Binding FirstName}" Padding="0,0,5,0"/>
+                    <TextBlock Text="{Binding LastName}" Padding="0,0,10,0"/>
+                    <TextBlock Text="Company: " Padding="0,0,5,0" FontWeight="Black"/>
                     <TextBlock Text="{Binding CompanyName}" Padding="0,0,10,0"/>
+                    <TextBlock Text="Phone: " Padding="0,0,5,0" FontWeight="Black"/>
                     <TextBlock Text="{Binding MobilePhone}" Padding="0,0,1,0"/>
                 </StackPanel>
             </Grid>

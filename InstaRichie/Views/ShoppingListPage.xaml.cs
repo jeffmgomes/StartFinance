@@ -159,7 +159,7 @@ namespace StartFinance.Views
                 string newItemName = ItemNameTextBox.Text;
                 double newPrice = Convert.ToDouble(ItemPriceTextBox.Text);
                 string newShopName = ShopNameTextBox.Text;
-                
+
 
                 DateTime newShopTime = ShoppingDatePicker.Date.DateTime;
                 string ShopTimeString;
@@ -186,7 +186,7 @@ namespace StartFinance.Views
                     //update time of shop //Cannot Update as DateTime for some reason. 
                     //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + ShopTimeString + "' WHERE ShoppingItemID ='" + selectedItem + "'");
-                    //selectedItem = "";
+                    
                     ShoppingListView.ItemsSource = query1.ToList(); //this will deselect the item
                     selectedItem = "";//will prevent updating last selected item. HL 08/04/19
                     //clear Fields
@@ -199,7 +199,12 @@ namespace StartFinance.Views
                 MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
                 await dialog.ShowAsync();
             }
-            catch(Exception ex)
+            catch (FormatException)
+            {
+                MessageDialog dialog = new MessageDialog("Amount must be in number form", "Oh dear..!");
+                await dialog.ShowAsync();
+            }
+            catch (Exception ex)
             {
                 MessageDialog dialog = new MessageDialog("Have you selected an item?", "Oh dear..!");
                 await dialog.ShowAsync();

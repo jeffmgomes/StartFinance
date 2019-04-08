@@ -183,7 +183,7 @@ namespace StartFinance.Views
                     var query3 = conn.Query<ShoppingList>("UPDATE ShoppingList SET PriceQuoted = '" + newPrice + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     //update Name of shop
                     var query4 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShopName = '" + newShopName + "' WHERE ShoppingItemID ='" + selectedItem + "'");
-                    //update time of shop //CANNOT UPDATE
+                    //update time of shop //Cannot Update as DateTime for some reason. 
                     //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + ShopTimeString + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     //selectedItem = "";

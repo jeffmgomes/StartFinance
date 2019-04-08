@@ -133,6 +133,7 @@ namespace StartFinance.Views
                     //var query2 = conn.Update(ShoppingList)
                     var query2 = conn.Query<ShoppingList>("DELETE FROM ShoppingList WHERE ShoppingItemID ='" + selectedItem + "'");
                     ShoppingListView.ItemsSource = query1.ToList();
+                    selectedItem = "";
                     ClearFields();
                 }
             }

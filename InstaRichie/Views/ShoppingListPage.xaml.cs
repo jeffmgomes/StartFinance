@@ -187,6 +187,7 @@ namespace StartFinance.Views
                     var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + ShopTimeString + "' WHERE ShoppingItemID ='" + selectedItem + "'");
                     //selectedItem = "";
                     ShoppingListView.ItemsSource = query1.ToList(); //this will deselect the item
+                    selectedItem = "";//will prevent updating last selected item. HL 08/04/19
                     //clear Fields
                     ClearFields();
                 }
@@ -206,6 +207,7 @@ namespace StartFinance.Views
 
         private async void ItemSelected(object sender, SelectionChangedEventArgs e)
         {
+            
             try
             {
                 if(ShoppingListView.SelectedItem!=null)
@@ -216,6 +218,9 @@ namespace StartFinance.Views
                     ItemNameTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).NameOfItem;
                     ShopNameTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).ShopName;
                     ItemPriceTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).PriceQuoted.ToString();
+                    //attempt to update date
+
+                    ShoppingDatePicker.Date = DateTime.Parse(((ShoppingList)ShoppingListView.SelectedItem).ShoppingDate.ToString());
 
 
                 }

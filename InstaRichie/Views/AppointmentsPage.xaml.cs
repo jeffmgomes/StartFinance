@@ -112,10 +112,10 @@ namespace StartFinance.Views
         {
             try
             {
-                //string selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString();
+
                 if (selectedItem == "")
                 {
-                    //
+
                     MessageDialog dialog = new MessageDialog("Not selected the Item", "Oops..!");
                     await dialog.ShowAsync();
                 }
@@ -124,9 +124,10 @@ namespace StartFinance.Views
                     //UPDATED: Changed to handle item ID
                     conn.CreateTable<Appointments>();
                     var query1 = conn.Table<Appointments>();
-                    //var query2 = conn.Update(ShoppingList)
+
                     var query2 = conn.Query<Appointments>("DELETE FROM Appointments WHERE AppointmentID ='" + selectedItem + "'");
                     AppointmentsView.ItemsSource = query1.ToList();
+                    selectedItem = "";
                     ClearFields();
                 }
             }
@@ -158,7 +159,7 @@ namespace StartFinance.Views
                 string newTOA = TOAtimePicker.Time.ToString();
 
 
-                //selectedItem = ((ShoppingList)ShoppingListView.SelectedItem).ShoppingItemID.ToString(); //now handled in ItemSelected event
+
                 if (selectedItem == "")
                 {
                     MessageDialog dialog = new MessageDialog("You need to select the item first.", "Oops..!");
@@ -169,17 +170,17 @@ namespace StartFinance.Views
                     //UPDATED: Changed to handle item ID
                     conn.CreateTable<Appointments>();
                     var query1 = conn.Table<Appointments>();
-                    //update item name
+                    //update first name
                     var query2 = conn.Query<Appointments>("UPDATE Appointments SET FirstName = '" + newFirstName + "' WHERE AppointmentID ='" + selectedItem + "'");
-                    //update itemPrice
+                    //update last name
                     var query3 = conn.Query<Appointments>("UPDATE Appointments SET LastName = '" + newLastName + "' WHERE AppointmentID ='" + selectedItem + "'");
-                    //update Name of shop
+                    //update date of appointment
                     var query4 = conn.Query<Appointments>("UPDATE Appointments SET DateOfAppointment = '" + DOAstring + "' WHERE AppointmentID ='" + selectedItem + "'");
-                    //update time of shop //CANNOT UPDATE
-                    //var query5 = conn.Query<ShoppingList>("UPDATE ShoppingList SET ShoppingDate = '" + newShopTime + "' WHERE ShoppingItemID ='" + selectedItem + "'");
+                    //update time of appointment 
                     var query5 = conn.Query<Appointments>("UPDATE Appointments SET TimeOfAppointmant = '" + newTOA + "' WHERE AppointmentID ='" + selectedItem + "'");
-                    //selectedItem = "";
+
                     AppointmentsView.ItemsSource = query1.ToList(); //this will deselect the item
+                    selectedItem = "";//will prevent updating last selected item.
                     //clear Fields
                     ClearFields();
                 }
@@ -209,6 +210,19 @@ namespace StartFinance.Views
                         FirstNametxtBox.Text = ((Appointments)AppointmentsView.SelectedItem).FirstName;
                         LastNametxtBox.Text = ((Appointments)AppointmentsView.SelectedItem).LastName;
                         //ItemPriceTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).PriceQuoted.ToString();
+
+                        DOAdatePicker.Date = DateTime.Parse(((Appointments)AppointmentsView.SelectedItem).DateOfAppointment.ToString());
+                        //TOAtimePicker.Time = 
+                        //TOAtimePicker.Time = AppointmentsView.SelectedItem.ToString();
+                        //TOAtimePicker.Time = Convert.ToDateTime(((Appointments)AppointmentsView.SelectedItem).DateOfAppointment.ToString());
+                        //TOAtimePicker.Time = Convert.ChangeType(AppointmentsView.SelectedItem, DateTime);
+                        //TOAtimePicker.Time = "12,00,00";
+                        //DOAdatePicker
+                        TOAtimePicker.Time = TimeSpan.Parse(((Appointments)AppointmentsView.SelectedItem).TimeOfAppointmant.ToString());
+
+
+
+
 
 
                     }

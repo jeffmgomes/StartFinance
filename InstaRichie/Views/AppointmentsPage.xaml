@@ -84,9 +84,9 @@
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignBottomWithPanel="True">
             <controls:PageHeader.PrimaryCommands>
-                <AppBarButton x:Name="UpdateItem" Icon="Up" Label="Update Item" Click="UpdateItem_Click" />
-                <AppBarButton x:Name="AddItem" Icon="Add" Label="Add Item to Shopping List" Click="AddItem_Click"/>
-                <AppBarButton x:Name="DeleteItem" Icon="Delete" Label="Delete Item" Click="DeleteItem_Click"/>
+                <AppBarButton x:Name="UpdateItem" Icon="Up" Label="Update Item" Click="UpdateItem_Click"  />
+                <AppBarButton x:Name="AddItem" Icon="Add" Label="Add Item to Shopping List" Click="AddItem_Click" />
+                <AppBarButton x:Name="DeleteItem" Icon="Delete" Label="Delete Item" Click="DeleteItem_Click" />
             </controls:PageHeader.PrimaryCommands>
 
         </controls:PageHeader>
@@ -95,7 +95,7 @@
             <!-- Set up where the user will enter data and layout of the page-->
             <RelativePanel.Below>pageHeader</RelativePanel.Below>
             <RelativePanel.Above>pageFooter</RelativePanel.Above>
-            <PivotItem Header="Add List Item">
+            <PivotItem Header="Add Appointment">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="300"/>

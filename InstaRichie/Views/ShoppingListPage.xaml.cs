@@ -226,7 +226,7 @@ namespace StartFinance.Views
                     ItemPriceTextBox.Text = ((ShoppingList)ShoppingListView.SelectedItem).PriceQuoted.ToString();
                     //attempt to update date
 
-                    ShoppingDatePicker.Date = DateTime.Parse(((ShoppingList)ShoppingListView.SelectedItem).ShoppingDate.ToString());
+                    ShoppingDatePicker.Date = DateTime.Parse(((ShoppingList)ShoppingListView.SelectedItem).ShoppingDate);
 
 
                 }

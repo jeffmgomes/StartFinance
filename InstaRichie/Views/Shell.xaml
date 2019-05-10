@@ -124,6 +124,30 @@
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
 
+            <!-- Appointments Button - Kathryn Fieg-->
+            <Controls:HamburgerButtonInfo ClearHistory="true" PageType="views:AppointmentsPage" AutomationProperties.Name="Jerry">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+                		Symbol="Calendar" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Appointments" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
+            <!--  Personal Info button - Jefferson Gomes  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:PersonalInfo" 
+                                          AutomationProperties.Name="Jerry"
+                                          >
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48"
+                		Symbol="Contact" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                               Text="Personal Info" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
+
+
         </Controls:HamburgerMenu.PrimaryButtons>
         
        
